@@ -432,7 +432,7 @@
                     </div>
                     <div class="bg-white/10 backdrop-blur p-6 rounded-xl border border-white/20">
                         <i class="fas fa-globe-americas text-3xl mb-3 text-amber-300"></i>
-                        <h3 class="font-bold text-xl">Enfoque Regional</h3>
+                        <h3 class="font-bold text-xl">Mirada Regional</h3>
                     </div>
                 </div>
             </div>
@@ -557,14 +557,16 @@
                 <h2 class="slide-title font-display">¿Qué es un Dato?</h2>
                 <div class="grid md:grid-cols-2 gap-16 items-center">
                     <div>
-                        <p class="text-3xl font-light leading-relaxed mb-8 text-gray-700">
-                            "Una representación <strong class="text-blue-600 font-bold">simbólica</strong> (numérica,
-                            alfabética, algorítmica, espacial, etc.) de un atributo o variable cuantitativa o
-                            cualitativa."
+                        <p class="text-2xl font-light leading-relaxed mb-7 text-gray-700">
+                            Una representación <strong>simbólica</strong> de hechos, objetos, eventos o fenómenos,
+                            capturados a través de la observación o experimentación que pueden ser procesados,
+                            almacenados y transmitidos.
                         </p>
                         <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-500">
-                            <p class="text-xl text-blue-800">
-                                Es la unidad mínima semántica, y la base primaria de la información.
+                            <p class="text-lg text-blue-800">
+                                Dicha representación (numérica, alfabética, algorítmica, espacial, etc.) de un
+                                atributo o variable cuantitativa o cualitativa es la unidad mínima semántica, y la base
+                                primaria de la información sin contexto interpretativo.
                             </p>
                         </div>
                     </div>
@@ -618,10 +620,13 @@
                     <div>
                         <div id="dikw-info-panel"
                             class="info-panel bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
-                            <h3 id="dikw-title" class="text-3xl font-bold mb-4 text-gray-800">Explora la Pirámide</h3>
-                            <p id="dikw-desc" class="text-xl text-gray-600 leading-relaxed">
-                                Pasa el mouse sobre cada nivel de la pirámide para entender cómo transformamos los datos
-                                en valor.
+                            <h3 id="dikw-title" class="text-3xl font-bold mb-4 text-gray-800">Pirámide DIKW</h3>
+                            <p id="dikw-desc" class="text-lg text-gray-600 leading-relaxed">
+                                Ilustra la progresión de datos sin procesar a conocimiento valioso, brindando un marco
+                                para
+                                evaluar el nivel de significado y utilidad de los datos. Cada nivel de la
+                                pirámide se construye sobre los niveles inferiores, y para tomar decisiones efectivas
+                                basadas en datos, se requieren los cuatro niveles.
                             </p>
                             <div id="dikw-example" class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 hidden">
                                 <span class="font-bold text-gray-700">Ejemplo:</span>
@@ -635,17 +640,17 @@
                 const dikwData = {
                     wisdom: {
                         title: "Sabiduría",
-                        desc: "Es el juicio aplicado. Responde a <strong>¿Por qué?</strong> y <strong>¿Qué es lo mejor que puedo hacer?</strong>. Implica ética, experiencia y visión a futuro.",
+                        desc: "Es el juicio aplicado. La habilidad para tomar decisiones informadas y acciones efectivas basadas en la comprensión del conocimiento subyacente. Responde a <strong>¿Por qué?</strong> y <strong>¿Qué es lo mejor que puedo hacer?</strong>. Implica ética, experiencia y visión a futuro.",
                         example: "Decidir implementar una política de 'Multas Cero' porque entendemos que el objetivo es el acceso, no la recaudación."
                     },
                     knowledge: {
                         title: "Conocimiento",
-                        desc: "Es información procesada, estructurada y aplicada. Responde a <strong>¿Cómo?</strong>. Es saber usar la información para una acción.",
+                        desc: "Es el resultado de analizar e interpretar la información para descubrir patrones, tendencias y relaciones. Responde a <strong>¿Cómo?</strong>. Es saber usar la información para una acción.",
                         example: "Saber que los usuarios de Medicina prefieren libros digitales y los de Arte prefieren impresos."
                     },
                     info: {
                         title: "Información",
-                        desc: "Son datos con contexto y significado. Responde a <strong>¿Qué?</strong>, <strong>¿Quién?</strong>, <strong>¿Cuándo?</strong>.",
+                        desc: "Son datos organizados, estructurados y con contexto y significado. Responde a <strong>¿Qué?</strong>, <strong>¿Quién?</strong>, <strong>¿Cuándo?</strong>.",
                         example: "El libro 'Cien años de soledad' fue prestado 50 veces este mes."
                     },
                     data: {
@@ -875,7 +880,7 @@
                         permiten a las máquinas realizar tareas que tradicionalmente requerían inteligencia humana, como
                         reconocimiento de patrones, procesamiento de lenguaje natural, toma de decisiones y resolución
                         de problemas.
-                        .</p>
+                    </p>
                     <div id="info-panel"
                         class="info-panel bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500">
                         <h3 id="info-title" class="text-xl font-bold text-blue-800 mb-2">Explora el diagrama</h3>
@@ -923,19 +928,19 @@
             <script>
                 const infoData = {
                     ai: {
-                        title: "Inteligencia Artificial (IA)", desc: "Cualquier técnica que permite a las computadoras imitar la inteligencia humana. <br><strong>Ejemplo:</strong> Un sistema experto de reglas para catalogación."
+                        title: "Inteligencia Artificial (IA)", desc: "Conjunto de reglas 'si-entonces' programadas por un humano. <br><strong>Ejemplo:</strong> Un chatbot básico que responde 'La biblioteca cierra a las 8 p.m.' si detecta la palabra 'horario'."
                     },
                     ml: {
-                        title: "Machine Learning (ML)", desc: "Algoritmos que aprenden de los datos sin ser programados explícitamente. <br><strong>Ejemplo:</strong> Recomendación de libros basada en préstamos anteriores."
+                        title: "Machine Learning (ML)", desc: "Los sistemas aprenden patrones a partir de datos sin ser programados explícitamente. <br><strong>Ejemplo:</strong> Un modelo que clasifica automáticamente correos electrónicos de usuarios como 'consulta de préstamo', 'queja'  o 'sugerencia'."
                     },
                     dl: {
-                        title: "Deep Learning (DL)", desc: "Redes neuronales profundas que aprenden patrones complejos. <br><strong>Ejemplo:</strong> Reconocimiento de imágenes en archivos digitales."
+                        title: "Deep Learning (DL)", desc: "Utiliza redes neuronales artificiales con muchas capas para modelar patrones extremadamente complejos. <br><strong>Ejemplo:</strong> Un sistema que analiza imágenes de manuscritos antiguos para transcribirlos automáticamente a texto digital."
                     },
                     nlp: {
-                        title: "Procesamiento de Lenguaje Natural (NLP)", desc: "Interacción entre computadoras y lenguaje humano. <br><strong>Ejemplo:</strong> Chatbots de atención al usuario."
+                        title: "Procesamiento de Lenguaje Natural (NLP)", desc: "Sistemas que permiten a las computadoras entender, interpretar y generar lenguaje humano en forma de texto o voz. <br><strong>Ejemplo:</strong> Un sistema de búsqueda que entiende consultas en lenguaje cotidiano como 'libros sobre cambio climático publicados recientemente' y las traduce automáticamente a términos de búsqueda precisos en el catálogo."
                     },
                     genai: {
-                        title: "IA Generativa", desc: "Crea nuevo contenido (texto, imágenes) similar al humano. <br><strong>Ejemplo:</strong> ChatGPT redactando resúmenes de artículos."
+                        title: "IA Generativa", desc: "Sistemas que crean contenido nuevo (texto, imágenes, audio) basándose en patrones aprendidos de grandes cantidades de datos, capaces de generar respuestas únicas y contextualizadas para cada solicitud.<br><strong>Ejemplo:</strong> Asistente que redacta automáticamente descripciones bibliográficas originales para nuevas adquisiciones del catálogo."
                     }
                 };
 
