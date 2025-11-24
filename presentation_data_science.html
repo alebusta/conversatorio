@@ -1,0 +1,1295 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ciencia de Datos en Bibliotecología - Presentación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-secondary: #64748b;
+            --color-accent: #f59e0b;
+            --color-neutral: #f8fafc;
+            --color-base: #1e293b;
+        }
+
+        .font-display {
+            font-family: 'Crimson Text', serif;
+        }
+
+        .font-body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Slide Layout */
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        section {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* Sidebar & Toggle */
+        .toc {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: rgba(248, 250, 252, 0.98);
+            border-right: 1px solid #e2e8f0;
+            overflow-y: auto;
+            z-index: 50;
+            padding: 4rem 1.5rem 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .toc.hidden-sidebar {
+            transform: translateX(-100%);
+        }
+
+        .toc a {
+            display: block;
+            padding: 0.75rem 0;
+            color: var(--color-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            border-left: 3px solid transparent;
+            padding-left: 1rem;
+            margin-left: -1rem;
+            transition: all 0.2s ease;
+        }
+
+        .toc a:hover,
+        .toc a.active {
+            color: var(--color-primary);
+            border-left-color: var(--color-primary);
+            background: rgba(37, 99, 235, 0.05);
+            font-weight: 600;
+        }
+
+        #sidebar-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 60;
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: left 0.3s ease;
+        }
+
+        #sidebar-toggle:hover {
+            background: #f1f5f9;
+        }
+
+        /* Content Adjustment when sidebar is visible */
+        .main-content {
+            margin-left: 280px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content.full-width {
+            margin-left: 0;
+        }
+
+        /* Presentation Specifics */
+        .slide-title {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            color: var(--color-base);
+        }
+
+        .slide-subtitle {
+            font-size: 1.5rem;
+            color: var(--color-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            height: 100%;
+        }
+
+        .big-number {
+            font-size: 4rem;
+            transform: translateX(-50%);
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1e293b;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+            font-size: 1.2rem;
+        }
+
+        /* DIKW Pyramid Styles */
+        .pyramid-container {
+            width: 600px;
+            height: 400px;
+            position: relative;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .pyramid-level-box {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1e293b;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+            font-size: 1.2rem;
+        }
+
+        .pyramid-level-box:hover {
+            transform: translateX(-50%) scale(1.05);
+            z-index: 10;
+            filter: brightness(1.1);
+            font-weight: 800;
+        }
+
+        .p-wisdom {
+            bottom: 300px;
+            width: 150px;
+            background: #22c55e;
+            /* Green */
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            z-index: 4;
+            color: white;
+            align-items: flex-end;
+            padding-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .p-knowledge {
+            bottom: 200px;
+            width: 300px;
+            background: #84cc16;
+            /* Lime */
+            clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+            z-index: 3;
+            color: #1a2e05;
+        }
+
+        .p-info {
+            bottom: 100px;
+            width: 450px;
+            background: #eab308;
+            /* Yellow-500 */
+            clip-path: polygon(16.6% 0%, 83.4% 0%, 100% 100%, 0% 100%);
+            z-index: 2;
+            color: #422006;
+        }
+
+        .p-data {
+            bottom: 0px;
+            width: 600px;
+            background: #fef08a;
+            /* Yellow-200 */
+            clip-path: polygon(12.5% 0%, 87.5% 0%, 100% 100%, 0% 100%);
+            z-index: 1;
+            color: #713f12;
+        }
+
+        /* Interactive Diagram Styles */
+        .diagram-container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            mix-blend-mode: normal;
+        }
+
+        .circle:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+            z-index: 20;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            mix-blend-mode: normal;
+        }
+
+        .circle-label {
+            margin-top: 2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-size: 1.2rem;
+            pointer-events: none;
+            text-align: center;
+            max-width: 80%;
+        }
+
+        .circle-ai {
+            width: 550px;
+            height: 550px;
+            background: rgba(30, 58, 138, 0.3);
+            /* Dark Blue - Reduced opacity */
+            z-index: 1;
+            left: 40%;
+            border: 2px solid rgba(30, 58, 138, 0.5);
+        }
+
+        .circle-ml {
+            width: 420px;
+            height: 420px;
+            background: rgba(59, 130, 246, 0.3);
+            /* Blue - Reduced opacity */
+            z-index: 2;
+            left: 40%;
+            border: 2px solid rgba(59, 130, 246, 0.5);
+        }
+
+        .circle-dl {
+            width: 280px;
+            height: 280px;
+            background: rgba(4, 73, 157, 0.3);
+            /* Light Blue - Reduced opacity */
+            z-index: 3;
+            left: 40%;
+            align-items: center;
+            border: 2px solid rgba(240, 242, 244, 0.5);
+        }
+
+        .circle-dl .circle-label {
+            margin-top: -30px !important;
+            font-size: 1rem;
+            padding-bottom: 0;
+        }
+
+        .circle-nlp {
+            width: 300px;
+            height: 300px;
+            background: rgba(45, 212, 191, 0.3);
+            /* Teal - Reduced opacity */
+            z-index: 4;
+            top: 58%;
+            left: 68%;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 2rem;
+            border: 2px solid rgba(45, 212, 191, 0.5);
+        }
+
+        .circle-genai {
+            width: 100px;
+            height: 100px;
+            background: rgba(244, 114, 182, 0.9);
+            /* Pink - Kept higher opacity for visibility */
+            z-index: 5;
+            left: 55%;
+            top: 55%;
+            animation: pulse 2s infinite;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(244, 114, 182, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .circle-genai .circle-label {
+            margin-top: 0;
+            font-size: 0.9rem;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(219, 39, 119, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(219, 39, 119, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(219, 39, 119, 0);
+            }
+        }
+
+        .circle.hidden-circle {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50%) translateX(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="font-body text-gray-800 bg-gray-50">
+
+    <!-- Sidebar Toggle -->
+    <button id="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars text-gray-600 text-xl"></i>
+    </button>
+
+    <!-- Navigation -->
+    <nav id="sidebar" class="toc">
+        <h3 class="font-display text-xl font-bold text-gray-800 mb-6 pl-4">Contenidos</h3>
+        <a href="#hero">Inicio</a>
+        <a href="#objetivos">1. Objetivos</a>
+        <a href="#que-es">2. ¿Qué es Ciencia de Datos?</a>
+        <a href="#pilares">2.1 Los 3 Pilares</a>
+        <a href="#ciclo-vida">2.2 El Ciclo de Vida</a>
+        <a href="#ia-relacion">3. Ciencia de Datos e IA</a>
+        <a href="#ia-generativa">3.1 IA Generativa y LLMs</a>
+        <a href="#aplicaciones">4. Aplicaciones en Bibliotecas</a>
+        <a href="#latam">5. Contexto Latinoamericano</a>
+        <a href="#postgrado">6. Propuesta de Postgrado</a>
+        <a href="#cierre">7. Cierre</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main" class="main-content">
+
+        <!-- Hero -->
+        <section id="hero" class="relative flex items-center justify-center text-center text-white">
+            <div class="hero-gradient absolute inset-0"></div>
+            <div class="absolute inset-0 bg-black opacity-20"></div>
+
+            <div class="relative z-10 max-w-5xl mx-auto px-6">
+                <h1 class="font-display text-6xl md:text-8xl font-bold mb-6 text-shadow">
+                    Ciencia de Datos e IA
+                    <span class="block text-amber-300 text-4xl md:text-6xl mt-4">en Bibliotecología</span>
+                </h1>
+                <p class="text-2xl md:text-3xl font-light opacity-90 mb-12 max-w-3xl mx-auto">
+                    Oportunidades para transformar la gestión del conocimiento en la región a través del poder de los
+                    datos
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-4xl mx-auto">
+                    <div class="bg-white/10 backdrop-blur p-6 rounded-xl border border-white/20">
+                        <i class="fas fa-chart-line text-3xl mb-3 text-amber-300"></i>
+                        <h3 class="font-bold text-xl">Ciencia de Datos</h3>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur p-6 rounded-xl border border-white/20">
+                        <i class="fas fa-brain text-3xl mb-3 text-amber-300"></i>
+                        <h3 class="font-bold text-xl">Inteligencia Artificial</h3>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur p-6 rounded-xl border border-white/20">
+                        <i class="fas fa-globe-americas text-3xl mb-3 text-amber-300"></i>
+                        <h3 class="font-bold text-xl">Enfoque Regional</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. Objetivos -->
+        <section id="objetivos" class="bg-white">
+            <div class="max-w-6xl mx-auto w-full">
+                <h2 class="slide-title font-display text-primary">Objetivos del Conversatorio</h2>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-blue-100 p-4 rounded-full text-blue-600">
+                                <i class="fas fa-lightbulb text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2">Entendimiento</h3>
+                                <p class="text-xl text-gray-600">Conocer los conceptos básicos de la Ciencia de Datos y
+                                    la Inteligencia Artificial.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="bg-red-100 p-4 rounded-full text-red-600">
+                                <i class="fas fa-cogs text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2">Aplicación</h3>
+                                <p class="text-xl text-gray-600">Explorar aplicaciones prácticas en el ámbito de la
+                                    Bibliotecología.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="bg-green-100 p-4 rounded-full text-green-600">
+                                <i class="fas fa-globe-americas text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2">Contexto </h3>
+                                <p class="text-xl text-gray-600">Discutir los desafíos y oportunidades en el contexto
+                                    latinoamericano.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="bg-purple-100 p-4 rounded-full text-purple-600">
+                                <i class="fas fa-users text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2">Adopción</h3>
+                                <p class="text-xl text-gray-600">Identificar elementos clave para su incorporación en la
+                                    carrera de Bibliotecología.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-100 rounded-2xl p-8 flex items-center justify-center h-full min-h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
+                            alt="Team collaboration" class="rounded-xl shadow-lg object-cover h-full w-full">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Qué es Ciencia de Datos -->
+        <section id="que-es" class="bg-gray-50">
+            <div class="max-w-6xl mx-auto w-full">
+                <h2 class="slide-title font-display">¿Qué es la Ciencia de Datos?</h2>
+
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <p class="text-3xl font-light leading-relaxed mb-8 text-gray-700">
+                            "Un proceso sistemático para <strong class="text-blue-600 font-bold">extraer
+                                conocimiento</strong> y valor a partir de datos."
+                        </p>
+                        <div class="bg-white p-8 rounded-xl border-l-8 border-amber-400 shadow-sm">
+                            <p class="text-xl italic text-gray-600">
+                                No es solo números. Es como un <strong>minero</strong> que procesa toneladas de
+                                <strong>roca</strong> (datos) y usa <strong>maquinaria especializada</strong>
+                                (algoritmos) para encontrar <strong>diamantes</strong> (insights) y generar valor.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="card bg-blue-600 text-white border-none">
+                            <div class="text-5xl mb-4"><i class="fas fa-database"></i></div>
+                            <h3 class="text-2xl font-bold">Datos</h3>
+                            <p class="opacity-80">La materia prima</p>
+                        </div>
+                        <div class="card bg-white">
+                            <div class="text-5xl mb-4 text-blue-600"><i class="fas fa-project-diagram"></i></div>
+                            <h3 class="text-2xl font-bold">Métodos</h3>
+                            <p class="text-gray-500">Estadística y Código</p>
+                        </div>
+                        <div class="card bg-white">
+                            <div class="text-5xl mb-4 text-amber-500"><i class="fas fa-lightbulb"></i></div>
+                            <h3 class="text-2xl font-bold">Insights</h3>
+                            <p class="text-gray-500">Valor real</p>
+                        </div>
+                        <div class="card bg-gray-800 text-white border-none">
+                            <div class="text-5xl mb-4"><i class="fas fa-rocket"></i></div>
+                            <h3 class="text-2xl font-bold">Acción</h3>
+                            <p class="opacity-80">Toma de decisiones</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Qué es un dato -->
+        <section id="que-es-dato" class="relative flex items-center justify-center text-center bg-gray-900 text-white">
+            <div class="hero-gradient absolute inset-0 opacity-20"></div>
+            <div class="relative z-10 max-w-4xl mx-auto px-6">
+                <h2 class="font-display text-6xl font-bold mb-8">¿Qué es un dato?</h2>
+            </div>
+        </section>
+
+        <!-- Acerca de los datos -->
+        <section id="que-es-dato" class="bg-white">
+            <div class="max-w-6xl mx-auto w-full">
+                <h2 class="slide-title font-display">¿Qué es un Dato?</h2>
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <p class="text-3xl font-light leading-relaxed mb-8 text-gray-700">
+                            "Una representación <strong class="text-blue-600 font-bold">simbólica</strong> (numérica,
+                            alfabética, algorítmica, espacial, etc.) de un atributo o variable cuantitativa o
+                            cualitativa."
+                        </p>
+                        <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-500">
+                            <p class="text-xl text-blue-800">
+                                Es la unidad mínima semántica, y la base primaria de la información.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="card border-l-4 border-green-500 hover:shadow-lg transition-shadow">
+                            <h3 class="text-xl font-bold mb-2 text-green-700">Datos Estructurados</h3>
+                            <p class="text-gray-600">Organizados y definidos (SQL, Excel). Fáciles de procesar.</p>
+                        </div>
+                        <div class="card border-l-4 border-amber-500 hover:shadow-lg transition-shadow">
+                            <h3 class="text-xl font-bold mb-2 text-amber-700">Datos Semi-estructurados</h3>
+                            <p class="text-gray-600">Con etiquetas o marcadores (JSON, XML, HTML).</p>
+                        </div>
+                        <div class="card border-l-4 border-purple-500 hover:shadow-lg transition-shadow">
+                            <h3 class="text-xl font-bold mb-2 text-purple-700">Datos No Estructurados</h3>
+                            <p class="text-gray-600">Sin formato predefinido (Texto, Imágenes, Audio, Video).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.0.2 DIKW (Interactive) -->
+        <section id="dikw" class="bg-gray-50">
+            <div class="max-w-7xl mx-auto w-full">
+                <h2 class="slide-title font-display text-center mb-8">La Jerarquía del Conocimiento (DIKW)</h2>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <!-- Interactive Pyramid -->
+                    <div class="h-[450px] flex items-end justify-center relative">
+                        <div class="pyramid-container">
+                            <div class="pyramid-level-box p-wisdom" onmouseenter="showDikwInfo('wisdom')"
+                                onmouseleave="hideDikwInfo()">
+                                <span>Sabiduría</span>
+                            </div>
+                            <div class="pyramid-level-box p-knowledge" onmouseenter="showDikwInfo('knowledge')"
+                                onmouseleave="hideDikwInfo()">
+                                <span>Conocimiento</span>
+                            </div>
+                            <div class="pyramid-level-box p-info" onmouseenter="showDikwInfo('info')"
+                                onmouseleave="hideDikwInfo()">
+                                <span>Información</span>
+                            </div>
+                            <div class="pyramid-level-box p-data" onmouseenter="showDikwInfo('data')"
+                                onmouseleave="hideDikwInfo()">
+                                <span>Datos</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Panel -->
+                    <div>
+                        <div id="dikw-info-panel"
+                            class="info-panel bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+                            <h3 id="dikw-title" class="text-3xl font-bold mb-4 text-gray-800">Explora la Pirámide</h3>
+                            <p id="dikw-desc" class="text-xl text-gray-600 leading-relaxed">
+                                Pasa el mouse sobre cada nivel de la pirámide para entender cómo transformamos los datos
+                                en valor.
+                            </p>
+                            <div id="dikw-example" class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 hidden">
+                                <span class="font-bold text-gray-700">Ejemplo:</span>
+                                <span id="dikw-example-text" class="text-gray-600 italic"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                const dikwData = {
+                    wisdom: {
+                        title: "Sabiduría",
+                        desc: "Es el juicio aplicado. Responde a <strong>¿Por qué?</strong> y <strong>¿Qué es lo mejor que puedo hacer?</strong>. Implica ética, experiencia y visión a futuro.",
+                        example: "Decidir implementar una política de 'Multas Cero' porque entendemos que el objetivo es el acceso, no la recaudación."
+                    },
+                    knowledge: {
+                        title: "Conocimiento",
+                        desc: "Es información procesada, estructurada y aplicada. Responde a <strong>¿Cómo?</strong>. Es saber usar la información para una acción.",
+                        example: "Saber que los usuarios de Medicina prefieren libros digitales y los de Arte prefieren impresos."
+                    },
+                    info: {
+                        title: "Información",
+                        desc: "Son datos con contexto y significado. Responde a <strong>¿Qué?</strong>, <strong>¿Quién?</strong>, <strong>¿Cuándo?</strong>.",
+                        example: "El libro 'Cien años de soledad' fue prestado 50 veces este mes."
+                    },
+                    data: {
+                        title: "Datos",
+                        desc: "Son la base. Símbolos, números o hechos sin procesar ni contexto. Por sí solos no dicen nada.",
+                        example: "38, 'Gabriel', 2024-11-22, 978-0307474728"
+                    }
+                };
+
+                function showDikwInfo(level) {
+                    const panel = document.getElementById('dikw-info-panel');
+                    const title = document.getElementById('dikw-title');
+                    const desc = document.getElementById('dikw-desc');
+                    const exampleBox = document.getElementById('dikw-example');
+                    const exampleText = document.getElementById('dikw-example-text');
+
+                    if (dikwData[level]) {
+                        title.innerHTML = dikwData[level].title;
+                        // Set color based on level
+                        if (level === 'wisdom') title.className = "text-3xl font-bold mb-4 text-green-600";
+                        if (level === 'knowledge') title.className = "text-3xl font-bold mb-4 text-lime-600";
+                        if (level === 'info') title.className = "text-3xl font-bold mb-4 text-yellow-600";
+                        if (level === 'data') title.className = "text-3xl font-bold mb-4 text-yellow-800";
+
+                        desc.innerHTML = dikwData[level].desc;
+                        exampleText.innerHTML = dikwData[level].example;
+                        exampleBox.classList.remove('hidden');
+                        panel.classList.add('visible');
+                    }
+                }
+
+                function hideDikwInfo() {
+                    // Optional: Reset to default state
+                }
+            </script>
+        </section>
+
+        <!-- 2.1 Pilares -->
+        <section id="pilares" class="bg-white">
+            <div class="max-w-7xl mx-auto w-full text-center">
+                <h2 class="slide-title font-display mb-12">Los 3 Pilares Fundamentales de la Ciencia de Datos</h2>
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <div class="card border-t-4 border-blue-500"><i
+                            class="fas fa-calculator text-5xl text-blue-500 mb-6"></i>
+                        <h3 class="text-2xl font-bold mb-4">Matemáticas y Estadística</h3>
+                        <p class="text-gray-600 text-lg">El rigor analítico para validar hipótesis.</p>
+                    </div>
+                    <div class="card border-t-4 border-purple-500"><i
+                            class="fas fa-laptop-code text-5xl text-purple-500 mb-6"></i>
+                        <h3 class="text-2xl font-bold mb-4">Ciencias de la Computación</h3>
+                        <p class="text-gray-600 text-lg">La capacidad de procesar grandes volúmenes.</p>
+                    </div>
+                    <div class="card border-t-4 border-amber-500"><i
+                            class="fas fa-book-reader text-5xl text-amber-500 mb-6"></i>
+                        <h3 class="text-2xl font-bold mb-4">Conocimiento del Dominio</h3>
+                        <p class="text-gray-600 text-lg">El contexto bibliotecario es la clave.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.2 Ciclo de Vida -->
+        <section id="ciclo-vida" class="bg-gray-50">
+            <div class="max-w-7xl mx-auto w-full">
+                <h2 class="slide-title font-display text-center mb-16">Ciclo de vida de un proyecto de ciencia de datos
+                </h2>
+                <div class="relative">
+                    <!-- Timeline Line -->
+                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-2 bg-gray-200 -translate-y-1/2 z-0">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative z-10">
+                        <!-- Step 1 -->
+                        <div
+                            class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-transform">
+                            <div
+                                class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                                1</div>
+                            <h3 class="font-bold text-lg mb-2">Definición</h3>
+                            <p class="text-sm text-gray-500">¿Qué problema resolvemos?</p>
+                        </div>
+                        <!-- Step 2 -->
+                        <div
+                            class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-transform">
+                            <div
+                                class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                                2</div>
+                            <h3 class="font-bold text-lg mb-2">Datos</h3>
+                            <p class="text-sm text-gray-500">Recolección y Limpieza</p>
+                        </div>
+                        <!-- Step 3 -->
+                        <div
+                            class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-transform">
+                            <div
+                                class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                                3</div>
+                            <h3 class="font-bold text-lg mb-2">Modelado</h3>
+                            <p class="text-sm text-gray-500">Análisis y Algoritmos</p>
+                        </div>
+                        <!-- Step 4 -->
+                        <div
+                            class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-transform">
+                            <div
+                                class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                                4</div>
+                            <h3 class="font-bold text-lg mb-2">Evaluación</h3>
+                            <p class="text-sm text-gray-500">¿Funciona?</p>
+                        </div>
+                        <!-- Step 5 -->
+                        <div
+                            class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-transform">
+                            <div
+                                class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                                5</div>
+                            <h3 class="font-bold text-lg mb-2">Despliegue</h3>
+                            <p class="text-sm text-gray-500">Implementación real</p>
+                        </div>
+                    </div>
+
+
+                    <!-- Botón para abrir el modal -->
+                    <div class="text-center mt-12">
+                        <button onclick="openCicloModal()" class="text-lg">+ Detalle</button>
+                    </div>
+
+                    <script>
+                        function openCicloModal() {
+                            const modal = document.getElementById('cicloModal');
+                            modal.classList.remove('hidden');
+                            modal.classList.add('flex');
+                            document.body.style.overflow = 'hidden';
+                        }
+
+                        function closeCicloModal() {
+                            const modal = document.getElementById('cicloModal');
+                            modal.classList.add('hidden');
+                            modal.classList.remove('flex');
+                            document.body.style.overflow = 'auto';
+                        }
+
+                        document.addEventListener('keydown', function (event) {
+                            if (event.key === 'Escape') {
+                                closeCicloModal();
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+
+            <!-- Modal para mostrar la imagen -->
+            <div id="cicloModal" class="fixed inset-0 bg-black bg-opacity-75 hidden items-center justify-center z-50"
+                onclick="closeCicloModal()">
+                <div class="relative max-w-6xl max-h-[90vh] p-4" onclick="event.stopPropagation()">
+                    <!-- Botón de cerrar -->
+                    <button onclick="closeCicloModal()"
+                        class="absolute -top-4 -right-4 bg-red-600 hover:bg-red-700 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold shadow-lg z-10 transition-all hover:scale-110">
+                        <i class="fas fa-times"></i>
+                    </button>
+
+                    <!-- Imagen -->
+                    <img src="ciclo.jpg" alt="Ciclo de Vida Completo"
+                        class="max-w-full max-h-[85vh] rounded-lg shadow-2xl">
+                </div>
+            </div>
+
+            <!-- JavaScript para controlar el modal -->
+            <script>
+                function openCicloModal() {
+                    const modal = document.getElementById('cicloModal');
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                function closeCicloModal() {
+                    const modal = document.getElementById('cicloModal');
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    document.body.style.overflow = 'auto';
+                }
+
+                document.addEventListener('keydown', function (event) {
+                    if (event.key === 'Escape') {
+                        closeCicloModal();
+                    }
+                });
+            </script>
+            </div>
+        </section>
+
+        <!-- 3. IA y Ciencia de Datos -->
+        <section id="ia-relacion" class="bg-white">
+            <div class="max-w-6xl mx-auto w-full">
+                <h2 class="slide-title font-display">Ciencia de Datos e IA</h2>
+                <h3 class="slide-subtitle">Una relación simbiótica: La Inteligencia Artificial es una herramienta
+                    fundamental dentro de la Ciencia de Datos, pero no son lo mismo.</h3>
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="space-y-8">
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4">La IA necesita Datos</h4>
+                        <p class="text-xl text-blue-900"> La ciencia de datos proporciona los datos limpios,
+                            estructurados y analizados que son cruciales para entrenar modelos de IA. Sin esos datos
+                            procesados y entendidos, los algoritmos de IA no podrían aprender ni operar
+                            correctamente.</p>
+
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4">La IA potencia la Ciencia de Datos</h4>
+                        <p class="text-xl text-blue-900">Al automatizar procesos complejos, como el análisis predictivo,
+                            la interpretación rápida de grandes volúmenes de información y la toma de decisiones basada
+                            en datos.</p>
+                    </div>
+                    <div class="relative flex items-center justify-center bg-black rounded-2xl p-8 min-h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=50"
+                            alt="AI Network" class="absolute inset-0 w-full h-full object-cover rounded-2xl opacity-50">
+                        <div class="relative z-10 text-center px-6">
+                            <p class="text-2xl font-bold text-gray-100 leading-relaxed">
+                                La ciencia de datos y la IA son campos distintos pero complementarios, que trabajan en
+                                conjunto para transformar datos en inteligencia práctica y soluciones innovadoras.
+                            </p>
+                        </div>
+                    </div>
+        </section>
+
+        <!-- 5. Qué es la Inteligencia Artificial -->
+        <section id="ia-diagrama" class="bg-slate-50">
+            <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="slide-title font-display mb-8">¿Qué es la Inteligencia Artificial?</h2>
+                    <p class="text-xl text-slate-600 mb-8">Conjunto de tecnologías y técnicas computacionales que
+                        permiten a las máquinas realizar tareas que tradicionalmente requerían inteligencia humana, como
+                        reconocimiento de patrones, procesamiento de lenguaje natural, toma de decisiones y resolución
+                        de problemas.
+                        .</p>
+                    <div id="info-panel"
+                        class="info-panel bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500">
+                        <h3 id="info-title" class="text-xl font-bold text-blue-800 mb-2">Explora el diagrama</h3>
+                        <p id="info-desc" class="text-slate-600">Pasa el mouse sobre los círculos para ver detalles y
+                            ejemplos.</p>
+                    </div>
+
+                    <!-- Visibility Controls -->
+                    <div class="mt-6 bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="toggleCircleVisibility('ai')"
+                                class="px-3 py-1 text-xs font-bold text-white bg-blue-900 rounded-full hover:opacity-0 transition-opacity"
+                                id="btn-ai">IA</button>
+                            <button onclick="toggleCircleVisibility('ml')"
+                                class="px-3 py-1 text-xs font-bold text-white bg-blue-500 rounded-full hover:opacity-0 transition-opacity"
+                                id="btn-ml">ML</button>
+                            <button onclick="toggleCircleVisibility('dl')"
+                                class="px-3 py-1 text-xs font-bold text-white bg-blue-400 rounded-full hover:opacity-0 transition-opacity"
+                                id="btn-dl">DL</button>
+                            <button onclick="toggleCircleVisibility('nlp')"
+                                class="px-3 py-1 text-xs font-bold text-white bg-teal-400 rounded-full hover:opacity-0 transition-opacity"
+                                id="btn-nlp">NLP</button>
+                            <button onclick="toggleCircleVisibility('genai')"
+                                class="px-3 py-1 text-xs font-bold text-white bg-pink-500 rounded-full hover:opacity-0 transition-opacity"
+                                id="btn-genai">GenAI</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative h-[600px] flex items-center justify-center">
+                    <div class="diagram-container scale-75 md:scale-90">
+                        <div class="circle circle-ai" onmouseenter="showInfo('ai')" onmouseleave="hideInfo()"><span
+                                class="circle-label">Inteligencia Artificial</span></div>
+                        <div class="circle circle-ml" onmouseenter="showInfo('ml')" onmouseleave="hideInfo()"><span
+                                class="circle-label">Machine Learning</span></div>
+                        <div class="circle circle-dl" onmouseenter="showInfo('dl')" onmouseleave="hideInfo()"><span
+                                class="circle-label">Deep Learning</span></div>
+                        <div class="circle circle-nlp" onmouseenter="showInfo('nlp')" onmouseleave="hideInfo()"><span
+                                class="circle-label">NLP</span></div>
+                        <div class="circle circle-genai" onmouseenter="showInfo('genai')" onmouseleave="hideInfo()">
+                            <span class="circle-label">GenAI</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                const infoData = {
+                    ai: {
+                        title: "Inteligencia Artificial (IA)", desc: "Cualquier técnica que permite a las computadoras imitar la inteligencia humana. <br><strong>Ejemplo:</strong> Un sistema experto de reglas para catalogación."
+                    },
+                    ml: {
+                        title: "Machine Learning (ML)", desc: "Algoritmos que aprenden de los datos sin ser programados explícitamente. <br><strong>Ejemplo:</strong> Recomendación de libros basada en préstamos anteriores."
+                    },
+                    dl: {
+                        title: "Deep Learning (DL)", desc: "Redes neuronales profundas que aprenden patrones complejos. <br><strong>Ejemplo:</strong> Reconocimiento de imágenes en archivos digitales."
+                    },
+                    nlp: {
+                        title: "Procesamiento de Lenguaje Natural (NLP)", desc: "Interacción entre computadoras y lenguaje humano. <br><strong>Ejemplo:</strong> Chatbots de atención al usuario."
+                    },
+                    genai: {
+                        title: "IA Generativa", desc: "Crea nuevo contenido (texto, imágenes) similar al humano. <br><strong>Ejemplo:</strong> ChatGPT redactando resúmenes de artículos."
+                    }
+                };
+
+                function showInfo(type) {
+                    const panel = document.getElementById('info-panel');
+                    const title = document.getElementById('info-title');
+                    const desc = document.getElementById('info-desc');
+
+                    if (infoData[type]) {
+                        title.innerHTML = infoData[type].title;
+                        desc.innerHTML = infoData[type].desc;
+                        panel.classList.add('visible');
+                    }
+                }
+
+                function hideInfo() {
+                    // Optional: keep last info or reset
+                }
+
+                function toggleCircleVisibility(type) {
+                    const circle = document.querySelector(`.circle-${type}`);
+                    const btn = document.getElementById(`btn-${type}`);
+
+                    if (circle) {
+                        circle.classList.toggle('hidden-circle');
+
+                        // Update button state
+                        if (circle.classList.contains('hidden-circle')) {
+                            btn.classList.add('opacity-50', 'line-through');
+                            btn.classList.remove('opacity-100');
+                        } else {
+                            btn.classList.remove('opacity-50', 'line-through');
+                            btn.classList.add('opacity-100');
+                        }
+                    }
+                }
+            </script>
+        </section>
+
+        <!-- 3.1 Grandes modelos de lenguaje -->
+        <section id="ia-generativa" class="bg-gray-900 text-white">
+            <div class="max-w-6xl mx-auto w-full">
+                <h2 class="slide-title font-display text-white">Grandes modelos de lenguaje (LLMs)</h2>
+                <div class="grid md:grid-cols-2 gap-16">
+                    <div>
+                        <p class="text-lg font-light leading-relaxed mb-8 text-gray-300">Modelos de aprendizaje
+                            profundo que han sido entrenados con cantidades masivas
+                            de datos para aprender a predecir la siguiente palabra en una secuencia. A través de este
+                            proceso, el modelo desarrolla una comprensión de las relaciones entre las palabras, el
+                            contexto y la gramática. <strong class="text-pink-400">Estos modelos pueden ser utilizados
+                                para generar texto nuevo, traducir, recuperar información, programar, etc.</strong>
+                        </p>
+                        <div class="space-y-6">
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-lg bg-purple-600 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-comment-dots text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold mb-1">LLMs (Modelos de Lenguaje)</h4>
+                                    <p class="text-gray-400">GPT, Claude, Gemini. Entienden y generan texto humano.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-lg bg-pink-600 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-magic text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold mb-1">Usos en Bibliotecas</h4>
+                                    <p class="text-gray-400">Resúmenes automáticos, asistentes de referencia,
+                                        generación de metadatos, clasificación de documentos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700">
+                        <h4 class="text-xl font-bold mb-6 text-gray-300">Ejemplo de Evolución del Procesamiento</h4>
+                        <div class="space-y-4">
+                            <div class="bg-gray-700 p-4 rounded-lg opacity-50"><span
+                                    class="block text-xs uppercase tracking-widest mb-1">Pasado</span>
+                                <div class="font-mono text-sm">Búsqueda por palabras clave ("historia", "arte")</div>
+                            </div>
+                            <div class="bg-gray-700 p-4 rounded-lg opacity-75"><span
+                                    class="block text-xs uppercase tracking-widest mb-1">Presente</span>
+                                <div class="font-mono text-sm">Búsqueda semántica (significado)</div>
+                            </div>
+                            <div
+                                class="bg-gradient-to-r from-purple-900 to-pink-900 p-4 rounded-lg border border-purple-500">
+                                <span class="block text-xs uppercase tracking-widest mb-1 text-purple-300">Futuro
+                                    (¿o presente?)</span>
+                                <div class="font-mono text-sm">"Ayúdame a investigar sobre la historia del arte en el
+                                    siglo XIX y crea un resumen."</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Aplicaciones -->
+        <section id="aplicaciones" class="bg-white">
+            <div class="max-w-7xl mx-auto w-full">
+                <h2 class="slide-title font-display mb-12">Aplicaciones Prácticas</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="card group hover:shadow-xl transition-shadow">
+                        <div class="h-48 bg-blue-100 rounded-lg mb-6 overflow-hidden"><img
+                                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                alt="Analytics"></div>
+                        <h3 class="text-2xl font-bold mb-3">Comportamiento de Usuarios</h3>
+                        <p class="text-gray-600">Entender patrones de uso para mejorar servicios y horarios.</p>
+                    </div>
+                    <div class="card group hover:shadow-xl transition-shadow">
+                        <div class="h-48 bg-green-100 rounded-lg mb-6 overflow-hidden"><img
+                                src="
+https://images.unsplash.com/photo-1605647507668-43f85faee767?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                alt="Books"></div>
+                        <h3 class="text-2xl font-bold mb-3">Gestión de Colecciones</h3>
+                        <p class="text-gray-600">Predicción de demanda para adquisiciones inteligentes.</p>
+                    </div>
+                    <div class="card group hover:shadow-xl transition-shadow">
+                        <div class="h-48 bg-purple-100 rounded-lg mb-6 overflow-hidden"><img
+                                src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                alt="Search"></div>
+                        <h3 class="text-2xl font-bold mb-3">Sistemas de Recomendación</h3>
+                        <p class="text-gray-600">"Si te gustó este libro, te encantará este otro" .</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Contexto LatAm -->
+        <section id="latam" class="bg-amber-50">
+            <div class="max-w-6xl mx-auto w-full">
+                <h2 class="slide-title font-display">Contexto Latinoamericano</h2>
+                <div class="grid md:grid-cols-2 gap-16">
+                    <!-- Desafíos -->
+                    <div>
+                        <h3 class="text-3xl font-bold mb-8 text-amber-800 flex items-center gap-3">
+                            <i class="fas fa-mountain"></i> Desafíos
+                        </h3>
+                        <div class="space-y-6">
+                            <!-- Item 1 -->
+                            <div class="latam-item bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-500">
+                                <div class="flex items-center gap-4">
+                                    <i class="fas fa-wifi text-amber-500 text-2xl w-8"></i>
+                                    <span class="text-xl font-bold text-gray-800">Brecha Digital</span>
+                                </div>
+                            </div>
+                            <!-- Item 2 -->
+                            <div class="latam-item bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-500">
+                                <div class="flex items-center gap-4">
+                                    <i class="fas fa-language text-amber-500 text-2xl w-8"></i>
+                                    <span class="text-xl font-bold text-gray-800">Brecha Idiomática y Cultural</span>
+                                </div>
+                            </div>
+                            <!-- Item 3 -->
+                            <div class="latam-item bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-500">
+                                <div class="flex items-center gap-4">
+                                    <i class="fas fa-coins text-amber-500 text-2xl w-8"></i>
+                                    <span class="text-xl font-bold text-gray-800">Recursos Limitados</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Oportunidades -->
+                    <div>
+                        <h3 class="text-3xl font-bold mb-8 text-green-800 flex items-center gap-3">
+                            <i class="fas fa-seedling"></i> Oportunidades
+                        </h3>
+                        <div class="space-y-6">
+                            <!-- Item 1 -->
+                            <div class="latam-item bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+                                <div class="flex items-center gap-4">
+                                    <i class="fas fa-users text-green-500 text-2xl w-8"></i>
+                                    <span class="text-xl font-bold text-gray-800">Talento Resiliente</span>
+                                </div>
+                            </div>
+                            <!-- Item 2 -->
+                            <div class="latam-item bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+                                <div class="flex items-center gap-4">
+                                    <i class="fas fa-handshake text-green-500 text-2xl w-8"></i>
+                                    <span class="text-xl font-bold text-gray-800">Colaboración Regional
+                                        (conoc.abierto)</span>
+                                </div>
+                            </div>
+                            <!-- Item 3 -->
+                            <div class="latam-item bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+                                <div class="flex items-center gap-4">
+                                    <i class="fas fa-leaf text-green-500 text-2xl w-8"></i>
+                                    <span class="text-xl font-bold text-gray-800">Riqueza de Datos Única</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Postgrado -->
+        <section id="postgrado" class="bg-blue-900 text-white">
+            <div class="max-w-5xl mx-auto w-full text-center">
+                <h2 class="slide-title font-display text-white mb-12">Elementos clave para incorporar la ciencia de
+                    datos en la bibliotecología</h2>
+                <div class="grid md:grid-cols-3 gap-8 text-left">
+                    <div class="bg-white/10 p-8 rounded-2xl backdrop-blur border border-white/20">
+                        <div class="text-4xl mb-4 text-blue-300">1</div>
+                        <h3 class="text-2xl font-bold mb-4">Fundamentos Técnicos</h3>
+                        <p class="opacity-80">Herramientas manipular, analizar y visualizar (Python, R, SQL, Estadística
+                            aplicada).</p>
+                    </div>
+                    <div class="bg-white/10 p-8 rounded-2xl backdrop-blur border border-white/20">
+                        <div class="text-4xl mb-4 text-blue-300">2</div>
+                        <h3 class="text-2xl font-bold mb-4">Gestión de Datos</h3>
+                        <p class="opacity-80">Capacidades para la Gobernanza, Ética, Privacidad, Mitigación de sesgos y
+                            Calidad de los datos.</p>
+                    </div>
+                    <div class="bg-white/10 p-8 rounded-2xl backdrop-blur border border-white/20">
+                        <div class="text-4xl mb-4 text-blue-300">3</div>
+                        <h3 class="text-2xl font-bold mb-4">Aplicación Estratégica</h3>
+                        <p class="opacity-80">Comunicación efectiva, pensamiento crítico y resolución de problemas,
+                            Trabajo en equipo y colaboración.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. Conclusiones -->
+        <section id="conclusiones" class="bg-white">
+            <div class="max-w-7xl mx-auto w-full">
+                <h2 class="slide-title font-display mb-8">Resumen de puntos clave</h2>
+                <div class="grid md:grid-cols-2 gap-12 mb-8">
+                    <div>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-2 rounded-full mr-4 mt-1 flex-shrink-0"><i
+                                        class="fas fa-chart-line text-blue-600"></i></div>
+                                <p class="text-slate-600">La ciencia de datos combina estadística, programación y
+                                    dominio para extraer valor y apoyar la toma de decisiones.</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-green-100 p-2 rounded-full mr-4 mt-1 flex-shrink-0"><i
+                                        class="fas fa-brain text-green-600"></i></div>
+                                <p class="text-slate-600">La IA es una poderosa herramienta que depende de datos de
+                                    calidad para automatizar y predecir.</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-purple-100 p-2 rounded-full mr-4 mt-1 flex-shrink-0"><i
+                                        class="fas fa-book text-purple-600"></i></div>
+                                <p class="text-slate-600">Las bibliotecas pueden beneficiarse de estas tecnologías para
+                                    mejorar la experiencia del usuario, gestionar colecciones y transformar la gestión
+                                    de
+                                    la información.</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-amber-100 p-2 rounded-full mr-4 mt-1 flex-shrink-0"><i
+                                        class="fas fa-globe-americas text-amber-600"></i></div>
+                                <p class="text-slate-600">América Latina enfrenta desafíos significativos pero también
+                                    tiene oportunidades únicas para desarrollar soluciones locales y preservar su
+                                    patrimonio cultural.</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-red-100 p-2 rounded-full mr-4 mt-1">
+                                    <i class="fas fa-users text-red-600"></i>
+                                </div>
+                                <p class="text-gray-700">La incorporación de esta disciplina a la bibliotecología
+                                    debería ser el resultado de un proceso que equilibre habilidades técnicas, blandas y
+                                    éticas, vinculado con las necesidades específicas del sector.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div><img
+                            src="https://images.unsplash.com/photo-1514513452089-17f8a9771ee8?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Colaboración" class="w-full rounded-xl shadow-lg mb-6 object-cover h-70"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Cierre -->
+        <section id="cierre" class="relative flex items-center justify-center text-center bg-gray-900 text-white">
+            <div class="hero-gradient absolute inset-0 opacity-20"></div>
+            <div class="relative z-10 max-w-4xl mx-auto px-6">
+                <h2 class="font-display text-6xl font-bold mb-8">Gracias</h2>
+                <p class="text-2xl mb-12 text-gray-300">¿Preguntas? ¿Comentarios? </p>
+                <div class="flex justify-center gap-8"><a href="#"
+                        class="text-white hover:text-amber-300 transition-colors text-3xl"><i
+                            class="fas fa-envelope"></i> alejandro.bustamante@un.org</a></div>
+            </div>
+        </section>
+    </main>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true, theme: 'neutral'
+        });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.getElementById('main');
+            const toggleBtn = document.getElementById('sidebar-toggle');
+
+            sidebar.classList.toggle('hidden-sidebar');
+
+            // Adjust main content margin only on desktop
+            if (window.innerWidth > 1024) {
+                main.classList.toggle('full-width');
+
+                // Move toggle button with sidebar
+                if (sidebar.classList.contains('hidden-sidebar')) {
+                    toggleBtn.style.left = '1rem';
+                }
+
+                else {
+                    // toggleBtn.style.left = '296px'; // Optional: move button
+                }
+            }
+        }
+
+        // Close sidebar on link click (mobile)
+        document.querySelectorAll('.toc a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    document.getElementById('sidebar').classList.add('hidden-sidebar');
+                }
+            });
+        });
+
+        // Active link highlighting on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.toc a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
